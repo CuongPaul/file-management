@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    container_name: file-management-db
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
+    networks:
+      - goals-net
+    volumes:
+      - .docker/db/postgresql:/var/lib/postgresql/data
+    restart: always
+
+  file-management:
+    image: file-management:latest
+    build:
+      context: ./
+      target: development
+      dockerfile: Dockerfile
+    container_name: file-management-app
+    ports:
+      - ${API_PORT}:${API_PORT}
+    networks:
+      - goals-net
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
+networks:
+  goals-net:

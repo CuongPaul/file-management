@@ -1,0 +1,20 @@
+# Linting
+.husky
+
+# Versioning and metadata
+.git
+.gitignore
+.dockerignore
+
+# Build dependencies
+dist
+.docker
+coverage
+node_modules
+
+# Files not required for production
+README.md
+Dockerfile
+tslint.json
+nodemon.json
+.editorconfig
